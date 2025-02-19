@@ -1,0 +1,29 @@
+# docker-compose.yml
+version: '3'
+
+services:
+  mathapi:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+      - JWT_SECRET=supersecret
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - C:/Users/shrut/OneDrive/Documents/Practice/src/prometheus:/etc/prometheus/prometheus
+
+volumes:
+  mongodb_data:
